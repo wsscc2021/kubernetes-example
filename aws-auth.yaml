@@ -5,17 +5,21 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::242593025403:role/dev-worldskills-role-nodegroup
+    - rolearn: arn:aws:iam::<<account-id>>:role/<<node-group-role-name>>
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
         - system:nodes
-    - rolearn: arn:aws:iam::242593025403:role/AdministratorRole
-      username: role:AdministratorRole
+    - rolearn: arn:aws:iam::<<account-id>>:role/<<admin-role-name>>
+      username: role:<<admin-role-name>>
       groups:
         - system:masters
   mapUsers: |
-    - userarn:arn:aws:iam::242593025403:root
+    - userarn:arn:aws:iam::<<account-id>>:root
       username: root
+      groups:
+        - system:masters
+    - userarn:arn:aws:iam::<<account-id>>:<<admin-username>>
+      username: <<admin-username>>
       groups:
         - system:masters
