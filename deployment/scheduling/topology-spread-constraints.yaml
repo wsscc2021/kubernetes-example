@@ -18,7 +18,8 @@ spec:
           topologyKey: "topology.kubernetes.io/zone"
           whenUnsatisfiable: "ScheduleAnyway" # "DoNotSchedule", "ScheduleAnyway"
           labelSelector:
-            app.kubernetes.io/name: "foo-api"
+            matchLabels:
+              app.kubernetes.io/name: "foo-api"
       containers:
         - image: 242593025403.dkr.ecr.us-east-1.amazonaws.com/foo-api:v1
           name: foo-api
