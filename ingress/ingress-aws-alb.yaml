@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kubia-ingress-alb # ingress 이름
@@ -11,18 +11,23 @@ metadata:
     # 자세한 annotation은 아래의 페이지에서 참조합니다.
     # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/annotations/
     alb.ingress.kubernetes.io/scheme: internet-facing
-    # alb.ingress.kubernetes.io/target-type: 'ip' # servicerk cluster-ip 타입인 경우 ip로 지정해야합니다.
+    alb.ingress.kubernetes.io/target-type: 'ip' # servicerk cluster-ip 타입인 경우 ip로 지정해야합니다.
     alb.ingress.kubernetes.io/load-balancer-name: kubia-ingress-alb # ALB 이름
-    # alb.ingress.kubernetes.io/security-groups: sg-xxxx, nameOfSg1, nameOfSg2
+    alb.ingress.kubernetes.io/security-groups: kubia-ingress-alb-sg
+    alb.ingress.kubernetes.io/manage-backend-security-group-rules: 'true' # security-groups 옵션을 사용할 경우 같이 활성화합니다.
     alb.ingress.kubernetes.io/healthcheck-path: /
     alb.ingress.kubernetes.io/healthcheck-interval-seconds: '10'
     alb.ingress.kubernetes.io/healthy-threshold-count: '2' # minimum 2
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '3'
+    alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=30
 spec:
   rules:
     - http:
         paths:
-          - path: /*
+          - path: /
+            pathType: Prefix # Prefix | Exact
             backend:
-              serviceName: kubia-svc-nodeport
-              servicePort: 80 # nodeport가 아닌, 서비스 포트번호를 작성합니다.
+              service:
+                name: kubia-svc-clusterip
+                port:
+                  number: 80 # nodeport가 아닌, 서비스 포트번호를 작성합니다.
