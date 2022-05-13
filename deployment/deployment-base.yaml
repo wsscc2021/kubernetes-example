@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: foo-api
+  name: kubia
   namespace: dev
 spec:
   replicas: 3
@@ -14,15 +14,27 @@ spec:
   minReadySeconds: 0 # default is 0
   selector:
     matchLabels: # https://kubernetes.io/ko/docs/concepts/overview/working-with-objects/common-labels/
-      app.kubernetes.io/name: foo-api
+      app.kubernetes.io/name: kubia
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: foo-api
+        app.kubernetes.io/name: kubia
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: "ScheduleAnyway" # "DoNotSchedule", "ScheduleAnyway"
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: kubia
+      tolerations:
+        - key: "Management"
+          operator: "Equal"       # "Equal", "Exists"
+          value: "Apps"           # operator가 "Equal"인 경우에만 사용합니다.
+          effect: "NoSchedule"    # "NoSchedule", "PreferNoSchedule", "NoExecute"
       containers:
         - image: luksa/kubia:2.0
-          name: foo-api
+          name: webapp
           ports:
             - containerPort: 8080
           resources:
