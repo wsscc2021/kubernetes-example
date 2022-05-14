@@ -1,0 +1,17 @@
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: coredns
+        resources:
+          limits:
+            cpu: 100m
+            memory: 170Mi
+          requests:
+            cpu: 100m
+            memory: 170Mi
+      tolerations:
+      - effect: NoSchedule
+        key: Management
+        value: Tools
