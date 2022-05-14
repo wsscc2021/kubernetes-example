@@ -1,4 +1,22 @@
 
+## 주의점
+
+- **Ingress Healthcheck와 liveness probe의 관계**
+
+    ingress 로 생성되는 Target Group의 Healthcheck는 liveness probe보다 먼저 동작하거나 동시점에 동작하는 것이 좋습니다.
+
+    liveness probe로 인해 컨테이너가 재시작되는 동안에는 트래픽을 처리할 수 없기 때문입니다.
+
+    이를 주의하여 ingress 생성 시 Healthcheck 의 interval, threshold를 설정하도록 합니다.
+
+- **Ingress Draining과 gracePeriodShutdown의 관계**
+
+    Ingress의 Draning 시간은 gracePeriodShutdown으로 설정된 시간과 같게 설정하는 것이 좋습니다.
+
+    파드가 종료될 때 gracePeriodShutdown 기간 동안은 종료되지 않을 수 있고, 
+
+    해당 기간이 넘어가면 강제 종료되기 때문에 더 이상 Draning을 유지할 필요가 없기 때문입니다.
+
 ## aws-load-balancer-controller
 
 ingress 리소스를 생성하기 위해서는 aws-load-balancer-controller를 먼저 생성해야 합니다.

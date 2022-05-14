@@ -16,9 +16,9 @@ metadata:
     alb.ingress.kubernetes.io/security-groups: kubia-ingress-alb-sg
     alb.ingress.kubernetes.io/manage-backend-security-group-rules: 'true' # security-groups 옵션을 사용할 경우 같이 활성화합니다.
     alb.ingress.kubernetes.io/healthcheck-path: /
-    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '10'
-    alb.ingress.kubernetes.io/healthy-threshold-count: '2' # minimum 2
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '5'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '3'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2' # minimum 2
     alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=30
 spec:
   rules:

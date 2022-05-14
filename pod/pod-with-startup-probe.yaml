@@ -34,10 +34,10 @@ spec:
         path: /
         port: 8080
       initialDelaySeconds: 0 # default 0, 어플리케이션이 시작될때까지 기다리는 시간입니다.
-      periodSeconds: 10 # default 10, Healthcheck 요청을 보내는 주기(Interval)입니다.
+      periodSeconds: 5 # default 10, Healthcheck 요청을 보내는 주기(Interval)입니다.
       timeoutSeconds: 5 # default 1, Healthcheck 요청의 타임아웃 값입니다.
       failureThreshold: 3 # default 3, 3번 이상 실패하면 파드를 재시작합니다.
-      successThreshold: 1 # default 1, 1번 이상 성공하면 Running 상태로 넘어갑니다.
+      successThreshold: 2 # default 1, 1번 이상 성공하면 Running 상태로 넘어갑니다.
       # liveness probe는 어플리케이션이 정상적으로 동작하는 지 확인하고,
       # 동작하지 않는 상태의 컨테이너를 재시작합니다.
       # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -46,10 +46,10 @@ spec:
         path: /
         port: 8080
       initialDelaySeconds: 0 # default 0, 어플리케이션이 시작될때까지 기다리는 시간입니다.
-      periodSeconds: 10 # default 10, Healthcheck 요청을 보내는 주기(Interval)입니다.
+      periodSeconds: 5 # default 10, Healthcheck 요청을 보내는 주기(Interval)입니다.
       timeoutSeconds: 5 # default 1, Healthcheck 요청의 타임아웃 값입니다.
-      failureThreshold: 6 # default 3, 3번 이상 실패하면 파드를 재시작합니다.
-      successThreshold: 1 # default 1, 1번 이상 성공하면 Running 상태로 넘어갑니다.
+      failureThreshold: 3 # default 3, 3번 이상 실패하면 파드를 재시작합니다.
+      successThreshold: 2 # default 1, 1번 이상 성공하면 Running 상태로 넘어갑니다.
       # startup probe는 어플리케이션 시작되는 도 중 liveness probe로 인해 재시작되는 것을 방지하기 위해서 사용됩니다.
       # 이는 initialDelaySeconds 값과 비슷하지만 동적인 시간 대역을 가져갈 수 있습니다.
       # 10 * 6 = 60s(max) periodSeconds * failureThreashold 으로 최대값을 지정할 수 있습니다.
