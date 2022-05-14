@@ -37,7 +37,7 @@ spec:
       periodSeconds: 5 # default 10, Healthcheck 요청을 보내는 주기(Interval)입니다.
       timeoutSeconds: 3 # default 1, Healthcheck 요청의 타임아웃 값입니다.
       failureThreshold: 3 # default 3, 3번 이상 실패하면 파드를 재시작합니다.
-      successThreshold: 2 # default 1, 1번 이상 성공하면 Running 상태로 넘어갑니다.
+      successThreshold: 1 # default 1, 1번 이상 성공하면 Running 상태로 넘어갑니다.
       # liveness probe는 어플리케이션이 정상적으로 동작하는 지 확인하고,
       # 동작하지 않는 상태의 컨테이너를 재시작합니다.
       # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
