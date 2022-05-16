@@ -86,9 +86,9 @@ REF: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/deploy/
             --set clusterName=<cluster-name> \
             --set serviceAccount.create=false \
             --set serviceAccount.name=aws-load-balancer-controller \
-            --set tolerations[0].key="key01" \
-            --set tolerations[0].value="value01" \
-            --set tolerations[0].effect="NoSchedule"
+            --set tolerations\[0\].key="key01" \
+            --set tolerations\[0\].value="value01" \
+            --set tolerations\[0\].effect="NoSchedule"
         ```
 
 7. Subnet Tag 추가
