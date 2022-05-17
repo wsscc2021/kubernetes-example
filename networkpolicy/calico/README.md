@@ -4,7 +4,7 @@ refer
 - https://kubernetes.io/ko/docs/concepts/services-networking/network-policies/
 
 
-## install calico plugin
+## calico
 
 1. add helm repo
 
