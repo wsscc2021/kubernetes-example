@@ -111,3 +111,98 @@ refer
 
         `kubernetes.io/role/internal-elb` : `1`
 
+## external-dns
+
+refer
+
+- https://github.com/kubernetes-sigs/external-dns/tree/master/charts/external-dns
+
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
+
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/alb-ingress.md
+
+1. create iam policy
+
+    ```json
+    {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "Resource": [
+            "arn:aws:route53:::hostedzone/*"
+          ]
+          },
+          {
+          "Effect": "Allow",
+          "Action": [
+            "route53:ListHostedZones",
+            "route53:ListResourceRecordSets"
+          ],
+          "Resource": [
+            "*"
+          ]
+        }
+      ]
+    }
+    ```
+
+    ```
+    aws iam create-policy \
+        --policy-name AmazonEKSExternalDNSPolicy \
+        --policy-document file://external-dns-policy.json
+    ```
+
+2. create iam role for service account
+
+    ```
+    eksctl create iamserviceaccount \
+        --cluster=<cluster-name> \
+        --namespace=kube-system \
+        --name=external-dns \
+        --attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AmazonEKSExternalDNSPolicy \
+        --override-existing-serviceaccounts \
+        --region <region-code> \
+        --approve
+    ```
+
+3. add helm repo 
+
+    ```
+    helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+    ```
+
+4. install helm chart
+
+    ```
+    helm upgrade --install external-dns external-dns/external-dns \
+    -n kube-system \
+    --set serviceAccount.create=false \
+    --set serviceAccount.name=external-dns
+    ```
+
+    - if you need tolerations.
+        ```
+        helm upgrade --install external-dns external-dns/external-dns \
+        -n kube-system \
+        --set serviceAccount.create=false \
+        --set serviceAccount.name=external-dns \
+        --set tolerations\[0\].key=Management \
+        --set tolerations\[0\].value=Tools \
+        --set tolerations\[0\].effect=NoSchedule
+        ```
+
+5. ingress annotations
+
+    ```
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: example-eks-ingress-alb
+      namespace: dev
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: www.skill53.cloud
+    ```
