@@ -21,7 +21,11 @@
 
 ingress 리소스를 생성하기 위해서는 aws-load-balancer-controller를 먼저 생성해야 합니다.
 
-REF: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/deploy/installation/
+refer
+
+- https://kubernetes-sigs.github.io/aws-load-balancer-controller/
+
+- https://github.com/kubernetes-sigs/aws-load-balancer-controller
 
 1. IAM - OIDC Provider 생성
 
@@ -107,13 +111,3 @@ REF: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/deploy/
 
         `kubernetes.io/role/internal-elb` : `1`
 
-
-
-Github Source
-https://github.com/kubernetes-sigs/aws-load-balancer-controller
-
-Guide Page
-https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/
-
-You can create service-account using aws-cdk.
-https://github.com/wsscc2021/aws-cdk-example/tree/master/services/eks
