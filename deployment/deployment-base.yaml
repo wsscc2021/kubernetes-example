@@ -20,6 +20,7 @@ spec:
       labels:
         app.kubernetes.io/name: kubia
     spec:
+      # serviceAccountName: foo-webapp
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "topology.kubernetes.io/zone"
