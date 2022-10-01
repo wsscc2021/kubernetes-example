@@ -8,19 +8,19 @@ refer
 
 1. add helm repo
 
-    ```powershell
+    ```bash
     helm repo add projectcalico https://docs.projectcalico.org/charts
     ```
 
 2. update helm repo
 
-    ```powershell
+    ```bash
     helm repo update
     ```
 
 3. create namespace
 
-    ```powershell
+    ```bash
     kubectl create namespace calico-system
     ```
 
@@ -37,6 +37,6 @@ refer
 
 5. install calico using helm
 
-    ```powershell
+    ```bash
     helm install calico projectcalico/tigera-operator --version v3.21.4 --namespace calico-system -f values.yaml
     ```

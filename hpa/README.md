@@ -22,10 +22,10 @@ refer
     
     - if you need to tolerations.
         ```
-        helm upgrade --install metrics-server metrics-server/metrics-server -n kube-system `
-        --set tolerations[0].key="Management" `
-        --set tolerations[0].value="Tools" `
-        --set tolerations[0].effect="NoSchedule"
+        helm upgrade --install metrics-server metrics-server/metrics-server -n kube-system \
+        --set tolerations\[0\].key="Management" \
+        --set tolerations\[0\].value="Tools" \
+        --set tolerations\[0\].effect="NoSchedule"
         ```
 
 
@@ -63,28 +63,28 @@ refer
     ```
 
     ```
-    aws iam create-policy `
-    --policy-name AmazonEKSClusterAutoscalerPolicy `
+    aws iam create-policy \
+    --policy-name AmazonEKSClusterAutoscalerPolicy \
     --policy-document file://cluster-autoscaler-policy.json
     ```
 
 2. create iam role for service account
 
     ```
-    eksctl utils associate-iam-oidc-provider `
-    --region <region-code> `
-    --cluster <your-cluster-name> `
+    eksctl utils associate-iam-oidc-provider \
+    --region <region-code> \
+    --cluster <your-cluster-name> \
     --approve
     ```
 
     ```
-    eksctl create iamserviceaccount `
-        --cluster=<cluster-name> `
-        --namespace=kube-system `
-        --name=cluster-autoscaler `
-        --attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AmazonEKSClusterAutoscalerPolicy `
-        --override-existing-serviceaccounts `
-        --region <region-code> `
+    eksctl create iamserviceaccount \
+        --cluster=<cluster-name> \
+        --namespace=kube-system \
+        --name=cluster-autoscaler \
+        --attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AmazonEKSClusterAutoscalerPolicy \
+        --override-existing-serviceaccounts \
+        --region <region-code> \
         --approve
     ```
 
@@ -97,25 +97,25 @@ refer
 4. install helm chart
 
     ```
-    helm upgrade --install aws-cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system `
-    --set autoDiscovery.clusterName=<CLUSTER NAME> `
-    --set awsRegion=<YOUR AWS REGION> `
-    --set rbac.serviceAccount.create=false `
-    --set rbac.serviceAccount.name=cluster-autoscaler `
-    --set image.tag="v1.22.0"
+    helm upgrade --install aws-cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system \
+    --set autoDiscovery.clusterName=<CLUSTER NAME> \
+    --set awsRegion=<YOUR AWS REGION> \
+    --set rbac.serviceAccount.create=false \
+    --set rbac.serviceAccount.name=cluster-autoscaler \
+    --set image.tag="v1.23.0"
     ```
 
     - cluster-autoscaler image tag 와 kubernetes version이 일치 해야합니다.
 
     - if you need to tolerations.
         ```
-        helm upgrade --install aws-cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system `
-        --set autoDiscovery.clusterName=<CLUSTER NAME> `
-        --set awsRegion=<YOUR AWS REGION> `
-        --set rbac.serviceAccount.create=false `
-        --set rbac.serviceAccount.name=cluster-autoscaler `
-        --set tolerations[0].key="Management" `
-        --set tolerations[0].value="Tools" `
-        --set tolerations[0].effect="NoSchedule" `
-        --set image.tag="v1.22.0"
+        helm upgrade --install aws-cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system \
+        --set autoDiscovery.clusterName=<CLUSTER NAME> \
+        --set awsRegion=<YOUR AWS REGION> \
+        --set rbac.serviceAccount.create=false \
+        --set rbac.serviceAccount.name=cluster-autoscaler \
+        --set tolerations\[0\].key="Management" \
+        --set tolerations\[0\].value="Tools" \
+        --set tolerations\[0\].effect="NoSchedule" \
+        --set image.tag="v1.23.0"
         ```
