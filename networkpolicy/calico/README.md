@@ -26,13 +26,13 @@ refer
 
 4. write `values.yaml`
 
-    ```powershell
+    ```yaml
     installation:
-    kubernetesProvider: EKS
-    controlPlaneTolerations: # if you need taint/toleration.
+      kubernetesProvider: EKS
+      controlPlaneTolerations: # if you need taint/toleration.
         - key: Management
-        value: Tools
-        effect: NoSchedule
+          value: Tools
+          effect: NoSchedule
     ```
 
 5. install calico using helm
