@@ -15,21 +15,21 @@ kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch
 
 associate oidc
 ```
-eksctl utils associate-iam-oidc-provider `
---cluster <your-cluster-name> `
---region <region-code> `
+eksctl utils associate-iam-oidc-provider \
+--cluster <your-cluster-name> \
+--region <region-code> \
 --approve
 ```
 
 create irsa
 ```
-eksctl create iamserviceaccount `
---cluster=<your-cluster-name> `
---region=<region-code> `
---namespace=amazon-cloudwatch `
---name=cloudwatch-agent `
---attach-policy-arn=arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy `
---override-existing-serviceaccounts `
+eksctl create iamserviceaccount \
+--cluster=<your-cluster-name> \
+--region=<region-code> \
+--namespace=amazon-cloudwatch \
+--name=cloudwatch-agent \
+--attach-policy-arn=arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy \
+--override-existing-serviceaccounts \
 --approve
 ```
 

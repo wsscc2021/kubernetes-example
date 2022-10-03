@@ -28,21 +28,21 @@ kubectl create configmap fluent-bit-cluster-info \
 
 associate oidc
 ```
-eksctl utils associate-iam-oidc-provider `
---cluster <your-cluster-name> `
---region <region-code> `
+eksctl utils associate-iam-oidc-provider \
+--cluster <your-cluster-name> \
+--region <region-code> \
 --approve
 ```
 
 create irsa
 ```
-eksctl create iamserviceaccount `
---cluster=<your-cluster-name> `
---region=<region-code> `
---namespace=amazon-cloudwatch `
---name=fluent-bit `
---attach-policy-arn=arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy `
---override-existing-serviceaccounts `
+eksctl create iamserviceaccount \
+--cluster=<your-cluster-name> \
+--region=<region-code> \
+--namespace=amazon-cloudwatch \
+--name=fluent-bit \
+--attach-policy-arn=arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy \
+--override-existing-serviceaccounts \
 --approve
 ```
 
